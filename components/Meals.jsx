@@ -93,7 +93,7 @@ export default function ItemSlider() {
                 return(
                             <ProductDisplay
                                 key={data.id}
-                                image={`url('${data.productImage}')`}
+                                image={`url('${data.productImages[0]}')`}
                                 status={data.productStatus}
                                 title={data.productTitle}
                                 tags={data.productTags}

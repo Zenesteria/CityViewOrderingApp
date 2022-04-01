@@ -29,3 +29,20 @@ a {
 .mobilebg{
   filter:brightness(30%);
 }
+
+.pending{
+  animation:pending 1.5s ease-in-out infinite alternate;
+}
+
+.activeProgress{
+  color:rgb(100,100,100);
+}
+
+@keyframes pending{
+  from{
+    opacity:0;
+  }
+  to{
+    opacity:1;
+  }
+}
