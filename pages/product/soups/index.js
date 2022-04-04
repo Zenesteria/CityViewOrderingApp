@@ -13,7 +13,7 @@ export default function SoupsPage({soupsdata}) {
         <div className="flex w-full flex-wrap p-5 items-center">
             {soupsdata.map((soup) => {
                 return(
-                    <ProductDisplay key={soup._id} data={soup}/>
+                    <ProductDisplay key={soup._id} data={soup} path={'/product/soups/'}/>
                 )
             })}
         </div>

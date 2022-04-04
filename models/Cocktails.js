@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 
-const SoftDrinksSchema = new mongoose.Schema({
+const CocktailsSchema = new mongoose.Schema({
     title:{
         type:String,
         required: true,
@@ -14,11 +14,11 @@ const SoftDrinksSchema = new mongoose.Schema({
     },
     tags:{
         type:[String],
-        default: ['chilled','contains sugar','carbonated']
+        default: ['chilled','pulpy','freshly squeezed']
     },
     category:{
         type:String,
-        default: 'Beverage'
+        default: 'Cocktails'
     },
     status:{
         type:String,
@@ -42,4 +42,4 @@ const SoftDrinksSchema = new mongoose.Schema({
 
 
 
-export default mongoose.models.SoftDrinks || mongoose.model("SoftDrinks", SoftDrinksSchema)
+export default mongoose.models.Cocktails || mongoose.model("Cocktails", CocktailsSchema)

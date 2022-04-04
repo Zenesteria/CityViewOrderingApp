@@ -1,13 +1,13 @@
 import Image from "next/image"
 import Link from "next/link";
 import Slider from 'react-slick'
-import {FaArrowLeft, FaArrowRight,} from 'react-icons/fa'
+import {AiOutlineLeft, AiOutlineRight} from 'react-icons/ai'
 
 function SampleNextArrow(props) {
     const { onClick } = props;
     return (
-      <div className="flex w-fit h-fit p-2 bg-white border-[0.5px] shadow-xl absolute right-0 md:right-[10%] top-[46%] cursor-pointer rounded-full z-30" onClick={onClick}>
-        <FaArrowRight className="text-[1rem] md:text-[1.5rem] text-gray-600"/>
+      <div className="flex w-fit h-fit p-2 bg-white border-[1px] absolute right-[5%] top-[50%] cursor-pointer rounded-full z-50 hover:bg-[rgb(179,57,19)] transition-all duration-300 group" onClick={onClick}>
+        <AiOutlineRight className="text-[1.5rem] text-gray-600 hover:text-white transition-all duration-300"/>
       </div>
     );
 }
@@ -15,8 +15,8 @@ function SampleNextArrow(props) {
   function SamplePrevArrow(props) {
     const {onClick} = props;
     return (
-        <div className="flex w-fit h-fit p-2 bg-white border-[0.5px] shadow-xl absolute left-0 md:left-[10%] top-[46%] cursor-pointer rounded-full z-30" onClick={onClick}>
-            <FaArrowLeft className="text-[1rem]  md:text-[1.5rem] text-gray-600 cursor-pointer"/>
+        <div className="flex w-fit h-fit p-2 bg-white border-[1px] absolute left-[5%] top-[50%] cursor-pointer rounded-full z-50 hover:bg-[rgb(179,57,19)] transition-all duration-300 group" onClick={onClick}>
+            <AiOutlineLeft className="text-[1.5rem] text-gray-600 hover:text-white transition-all duration-300"/>
         </div>
     );
 }
@@ -40,9 +40,9 @@ export default function MealMenu() {
                 <div className="">
                     <SlideA/>
                 </div>
-                <div className="">
+                {/* <div className="">
                     <SlideB/>
-                </div>
+                </div> */}
             </Slider>
         </div> 
     )
@@ -52,12 +52,12 @@ export default function MealMenu() {
 const SlideA = () => {
     return(
         <div className="flex w-[80%] h-fit min-h-[50vh] flex-wrap p-4 mx-auto justify-around items-center min-w-[330px]">
-            <MenuItem Href='/product/softdrinks' img={'/images/softdrinks.png'} title='Soft Drinks' shadowcolor={'rgba(156,45,2,0.5)'}/>
+            <MenuItem Href='/product/soft-drinks' img={'/images/softdrinks.png'} title='Soft Drinks' shadowcolor={'rgba(156,45,2,0.5)'}/>
             <MenuItem Href='/product/cocktails' img={'/images/cocktails.png'} title='Juice & Cocktails' shadowcolor={'rgb(106,5,123)'}/>
             <MenuItem Href='/product/traditional-meza' img={'/images/meza.png'} title='Traditional Meza' shadowcolor={'rgb(255,228,165)'}/>
-            <MenuItem Href='/product/soups/' img={'/images/soups.png'} title='Soups' shadowcolor={'rgb(243,236,129)'}/>
+            {/* <MenuItem Href='/product/soups/' img={'/images/soups.png'} title='Soups' shadowcolor={'rgb(243,236,129)'}/>
             <MenuItem Href='/product/rice-and-spaghetti' img={'/images/riceandspag.png'} title='Rice & Spaghetti' shadowcolor={'rgb(235,235,195)'}/>
-            <MenuItem Href='/product/salads' img={'/images/salad.png'} title='Salads' shadowcolor='rgba(49,67,50,0.5)'/>
+            <MenuItem Href='/product/salads' img={'/images/salad.png'} title='Salads' shadowcolor='rgba(49,67,50,0.5)'/> */}
             
         </div>
     )

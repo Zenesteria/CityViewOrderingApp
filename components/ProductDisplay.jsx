@@ -1,9 +1,9 @@
 import {BsFillLightningFill} from 'react-icons/bs'
 import Link from 'next/link';
 
-const ProductDisplay = ({data}) => {
+const ProductDisplay = ({data, path}) => {
     return(
-        <Link href={`/product/soups/${data._id}`}>
+        <Link href={`${path}${data._id}`}>
             <a className="flex cursor-pointer border-2 rounded-xl flex-col items-center text-center w-fit h-fit mx-auto my-4 min-w-[300px] max-w-[350px] group p-5">
                 <div className="flex mb-4 w-[150px] h-[150px] rounded-full bg-cover bg-center bg-no-repeat group-hover:scale-110 transition-all duration-700 ease-in-out" style={{backgroundImage:`url('${data.imgs[0]}')`}}>
 
