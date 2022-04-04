@@ -32,7 +32,7 @@ function SampleNextArrow(props) {
 //   return data.id < 11 && !data.Featured
 // })
 
-export default function ItemSlider({featured, soups}) {
+export default function ItemSlider({featured}) {
     const settings = {
         dots: false,
         infinite: true,

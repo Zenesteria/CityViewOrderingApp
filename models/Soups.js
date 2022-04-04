@@ -12,9 +12,23 @@ const SoupSchema = new mongoose.Schema({
         required: true,
         maxlength: 200
     },
-    img:{
+    tags:{
+        type:[String],
+        default: ['soup','healthy','low cal']
+    },
+    category:{
+        type:String,
+        default: 'Soup'
+    },
+    status:{
         type:String,
         required: true
+    },
+    imgs:{
+        type:[String],
+        maxlength:2,
+        minlength:2,
+        required:true
     },
     prices:{
         type:[Number],
@@ -25,6 +39,7 @@ const SoupSchema = new mongoose.Schema({
     }
 },{timestamps:true}
 );
+
 
 
 export default mongoose.models.Soups || mongoose.model("Soups", SoupSchema)

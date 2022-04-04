@@ -11,7 +11,7 @@ import CustomerFeedback from '../components/CustomerFeedback'
 import BannerSecondary from '../components/BannerSecondary'
 
 
-export default function Home({featured, soups, feedbacks}) {
+export default function Home({featured, feedbacks}) {
 
   return (
     <div className='flex flex-col w-full font-raleway'>
@@ -22,7 +22,7 @@ export default function Home({featured, soups, feedbacks}) {
       </Head>
       <Carousel CarouselData={CarouselData}/>
       <SubShowcase/>
-      <Meals featured={featured} soups={soups}/>
+      <Meals featured={featured}/>
       <MealMenu/>
       <Banner/>
       <CustomerFeedback feedbackdata={feedbacks}/>
@@ -33,12 +33,10 @@ export default function Home({featured, soups, feedbacks}) {
 
 export const getServerSideProps = async () => {
   const res = await axios.get('http://localhost:3000/api/Featured');
-  const soups = await axios.get('http://localhost:3000/api/Products/soups')
   const feedback = await axios.get('http://localhost:3000/api/Feedback')
   return{
     props:{
       featured: res.data,
-      soups: soups.data,
       feedbacks: feedback.data
     },
   };

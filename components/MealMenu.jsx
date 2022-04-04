@@ -55,7 +55,7 @@ const SlideA = () => {
             <MenuItem Href='/product/softdrinks' img={'/images/softdrinks.png'} title='Soft Drinks' shadowcolor={'rgba(156,45,2,0.5)'}/>
             <MenuItem Href='/product/cocktails' img={'/images/cocktails.png'} title='Juice & Cocktails' shadowcolor={'rgb(106,5,123)'}/>
             <MenuItem Href='/product/traditional-meza' img={'/images/meza.png'} title='Traditional Meza' shadowcolor={'rgb(255,228,165)'}/>
-            <MenuItem Href='/product/soups' img={'/images/soups.png'} title='Soups' shadowcolor={'rgb(243,236,129)'}/>
+            <MenuItem Href='/product/soups/' img={'/images/soups.png'} title='Soups' shadowcolor={'rgb(243,236,129)'}/>
             <MenuItem Href='/product/rice-and-spaghetti' img={'/images/riceandspag.png'} title='Rice & Spaghetti' shadowcolor={'rgb(235,235,195)'}/>
             <MenuItem Href='/product/salads' img={'/images/salad.png'} title='Salads' shadowcolor='rgba(49,67,50,0.5)'/>
             
