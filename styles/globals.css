@@ -38,6 +38,10 @@ a {
   color:rgb(100,100,100);
 }
 
+.glow{
+  text-shadow:0 0 10px rgb(225,132,84);
+}
+
 @keyframes pending{
   from{
     opacity:0;

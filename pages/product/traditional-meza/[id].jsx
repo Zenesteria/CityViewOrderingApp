@@ -17,10 +17,17 @@ const rating = Math.floor(ProductInfo.avgRating)
 const Product = ({meza}) => {
   const router = useRouter();
 
-  const handleTempBg = (e) => {
-    const targetBg = e.target.style.backgroundImage
-    setCurrentDisplayBg(targetBg) 
-  }
+    const handleTempBg = (e) => {
+        const targetBg = e.target.style.backgroundImage
+        setCurrentDisplayBg(targetBg) 
+    }
+
+    const handleChange = (e, option) => {
+        const checked = e.target.checked;
+        if(checked){
+            
+        }
+    }
 
   const [currentDisplayBg, setCurrentDisplayBg] = useState(`url('${meza.imgs[0]}')`)
   const [noOfItems,setNoOfItems] = useState(1)
@@ -63,6 +70,21 @@ const Product = ({meza}) => {
                       <p className='m-2 border-[1px] rounded-md p-[2px] text-[0.7rem] min-w-[100px] flex items-center justify-center border-[rgb(153,43,17)] hover:bg-[rgb(153,43,17)] hover:text-white hover:scale-110 hover:font-bold transition-all duration-700' key={i}>{tag}</p>
                   )
               })}
+            </div>
+            <div className="flex h-fit mt-5 items-center">
+                {meza.extraOptions.map((opt) => {
+                  return(
+                    <div className="flex items-center mx-2" key={opt._id}>
+                        <input 
+                          type="checkbox" 
+                          id={opt.text}
+                          name={opt.text}
+                          onChange={(e) => handleChange(e, opt)}
+                        />
+                        <label htmlFor={opt.text} className='text-[1.1rem] mb-1 mx-1'>{opt.text}</label>
+                    </div>
+                  )
+                })}
             </div>
             <div className="flex flex-col w-fit my-4 p-2">
                 <p className='font-bold text-[1.5rem]'>{`₦${meza.prices[0]}.00`}</p>

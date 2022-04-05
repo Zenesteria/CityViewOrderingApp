@@ -64,6 +64,7 @@ const Product = ({drink}) => {
                   )
               })}
             </div>
+            
             <div className="flex flex-col w-fit my-4 p-2">
                 <p className='font-bold text-[1.5rem]'>{`₦${drink.prices[0]}.00`}</p>
                 <div className="flex h-fit w-fit my-2">

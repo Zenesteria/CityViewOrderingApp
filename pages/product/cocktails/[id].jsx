@@ -1,8 +1,9 @@
 import React from 'react'
 import Products from '../../../data/Products'
-import { useState } from 'react';
+import { useState} from 'react';
 import { useRouter } from 'next/router';
 import {BsStarFill,BsStarHalf,BsStar} from 'react-icons/bs'
+import {GiWineBottle} from 'react-icons/gi'
 import Link from 'next/link';
 import axios from 'axios';
 
@@ -14,16 +15,67 @@ const rating = Math.floor(ProductInfo.avgRating)
 
 
 
+
+
 const Product = ({drink}) => {
+    //STATES
+
+    const [size, setSize] = useState(0)
+    const [price, setPrice] = useState(drink.prices[0]);
+
+
+
+    const [actSize, setActSize] = useState({
+      large: false,
+      small: true
+    });
+  
+    const [currentDisplayBg, setCurrentDisplayBg] = useState(`url('${drink.imgs[0]}')`)
+    const [noOfItems,setNoOfItems] = useState(1)
+
   const router = useRouter();
+
+  const handlePrice = (value) => {
+    setPrice(price + value);
+    console.log(price)
+  }
 
   const handleTempBg = (e) => {
     const targetBg = e.target.style.backgroundImage
     setCurrentDisplayBg(targetBg) 
   }
 
-  const [currentDisplayBg, setCurrentDisplayBg] = useState(`url('${drink.imgs[0]}')`)
-  const [noOfItems,setNoOfItems] = useState(1)
+  const handleActSize = (e, val) => {
+      setActSize(() => {
+        if(val === 0 ){
+          console.log('small')
+          const diff = drink.prices[val] - drink.prices[size]
+          setSize(val)
+          handlePrice(diff)
+          return {
+            large: false,
+            small: true
+          }
+        }
+        else if(val === 1){
+          console.log('large')
+          const diff = drink.prices[val] - drink.prices[size]
+          setSize(val)
+          handlePrice(diff)
+          return {
+            large: true,
+            small: false
+          }
+        }
+      })
+  }
+
+
+
+
+
+
+ 
 
   return(
     <div className="flex w-full items-center justify-center min-h-[85vh] h-fit">
@@ -64,8 +116,12 @@ const Product = ({drink}) => {
                   )
               })}
             </div>
+            <div className="flex mt-7 items-end">
+                <SizeBtn txt='small' val={0} callBack={handleActSize} act={actSize.small && true}/>
+                <SizeBtn txt='large' val={1} callBack={handleActSize} act={actSize.large && true}/>
+            </div>
             <div className="flex flex-col w-fit my-4 p-2">
-                <p className='font-bold text-[1.5rem]'>{`₦${drink.prices[0]}.00`}</p>
+                <p className='font-bold text-[1.5rem]'>{`₦${price}.00`}</p>
                 <div className="flex h-fit w-fit my-2">
                   <input type="text" value={noOfItems} className='border-2 w-[70px]' onChange={()=>{}}/>
                   <button className='mx-2 text-white bg-[rgb(153,43,17)] p-2 hover:bg-[rgb(119,35,13)] transition-all duration-300'>Add to cart</button>
@@ -81,6 +137,15 @@ const Product = ({drink}) => {
 const DisplayButton = (props) => {
   return(
     <div className="bg-center mx-2 bg-cover bg-no-repeat h-[30px] w-[30px] border-[0.5px] border-transparent transition-all duration-500 ease-in-out hover:border-gray-500 hover:opacity-100 hover:scale-125 group" style={{backgroundImage: props.bg}} onMouseOver={props.mouseOver}></div>
+  )
+}
+
+const SizeBtn = ({txt, val, callBack, act}) => {
+  return(
+      <div className="flex flex-col mx-4 items-center justify-end hover:text-[rgb(188,98,62)] group" style={act ? {color: 'rgb(188,98,62)' , fontWeight: 'bold'} : {}} onClick={(e) => callBack(e, val)}>
+          <GiWineBottle className={`text-[${txt === 'large' ? '3rem' : '1.5rem'}] group-hover:scale-110  transition-all duration-300`}/>
+          <h1 className='group-hover:font-bold transition-all duration-300'>{txt}</h1>
+      </div>
   )
 }
 

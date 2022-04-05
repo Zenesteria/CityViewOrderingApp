@@ -8,7 +8,7 @@ export default function SoupsPage({drinksdata}) {
     <div className="flex w-full h-fit flex-col">
         <div className="flex w-full h-[50vh] relative justify-center items-center p-5">
             <div className="absolute w-full h-full top-0 right-0 bg-cover bg-center bg-no-repeat darken z-[-1]" style={{backgroundImage: `url('${drinksdata[0].imgs[0]}')`}}></div>
-            <h1 className='text-[4rem] text-white font-bold'>City View Soft Drinks</h1>
+            <h1 className='text-[2.5rem] md:text-[4rem] text-white font-bold'>City View Soft Drinks</h1>
         </div>
         <div className="flex w-full flex-wrap p-5 items-center">
             {drinksdata.map((drink) => {
