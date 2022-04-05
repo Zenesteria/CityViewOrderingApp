@@ -4,10 +4,14 @@ import {BsFillCalendarEventFill} from 'react-icons/bs'
 import {AiOutlineShoppingCart} from 'react-icons/ai'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+
+
 
 const NavBar = () => {
-    const [display, setDisplay] = useState(false)
+    const [display, setDisplay] = useState(false);
+
     const handleDisplay = () => {
         if(display){
             setDisplay(false)
@@ -16,6 +20,7 @@ const NavBar = () => {
             setDisplay(true)
         }
     }
+    
     const show = "lg:hidden z-[999] overflow-hidden  flex fixed bg-[rgb(153,43,18)] right-0 top-0 w-[65vw] max-w-[300px] h-screen transition-all duration-700"
     const hidden = 'lg:hidden z-[999] flex fixed bg-transparent right-0 top-0 w-0 max-w-[300px] h-screen transition-all duration-700'
     return(
@@ -34,7 +39,7 @@ const NavBar = () => {
                 <SubNav/>
                 
                 
-                <FaBars className={(display ? 'text-white fixed right-[5px]' : '' )+' lg:hidden ml-auto mr-4 text-[1.5rem] z-[1000] cursor-pointer transition-all duration-300'} onClick={handleDisplay}/>
+                <FaBars className={(display ? 'text-white fixed right-[5px]' : '' )+' lg:hidden ml-auto mr-4 text-[1.5rem] z-[1000] cursor-pointer transition-all duration-300'} onClick={handleDisplay} />
                 <div className={display ? show : hidden}>
                     <div className="absolute bg-cover bg-center bg-no-repeat w-full h-full top-0 right-0 bg-[url('/images/mainbackdrop.jpg')] z-[-1] mobilebg"></div>
                     <MobileMenu innerDisplay={display ? 'flex':'hidden'}/>
@@ -104,17 +109,7 @@ const MobileMenu = (props) => {
             </div>
             <div className="flex items-center  w-full h-fit">
                 <div className="flex items-center w-full">
-                    <Link href='/Cart'>
-                        <a className=" h-fit w-full relative my-4 bg-white text-[rgb(153,43,18)] p-3 rounded-xl flex items-center justify-around">
-                            <h1 className='text-[1.3rem] font-bold'>Your Order: </h1>
-                            <div className="flex relative w-fit">
-                                <AiOutlineShoppingCart className='text-[2rem]'/>
-                                <div className="flex items-center justify-center absolute top-[-20%] right-[-25%] p-1 h-[20px] text-[15px] w-[20px] rounded-full bg-[rgb(221,74,57)] text-white font-bold">
-                                    2
-                                </div>
-                            </div>
-                        </a>
-                    </Link>
+                    <Cart/>
                 </div>
             </div>
         </div>
@@ -160,16 +155,23 @@ const SubNav = () => {
 
 
             <div className="flex w-[25%] justify-center">
-                <Link href='/Cart'>
-                    <a className=" h-fit w-fit my-auto relative">
-                        <AiOutlineShoppingCart className='text-[2rem]'/>
-                        <div className="flex items-center justify-center absolute top-[-20%] right-[-25%] p-1 h-[20px] text-[15px] w-[20px] rounded-full bg-[rgb(221,74,57)] text-white font-bold">
-                            2
-                        </div>
-                    </a>
-                </Link>
+                <Cart/>
             </div>
         </div>
+    )
+}
+
+const Cart = () => {
+    const quantity = useSelector(state => state.cart.quantity);
+    return(
+        <Link href='/Cart'>
+            <a className=" h-fit w-fit my-auto relative">
+                <AiOutlineShoppingCart className='text-[2rem]'/>
+                <div className="flex items-center justify-center absolute top-[-20%] right-[-25%] p-1 h-[20px] text-[15px] w-[20px] rounded-full bg-[rgb(221,74,57)] text-white font-bold">
+                    {quantity}
+                </div>
+            </a>
+        </Link>
     )
 }
 

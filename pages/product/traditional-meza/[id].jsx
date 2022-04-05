@@ -1,20 +1,17 @@
-import React from 'react'
-import Products from '../../../data/Products'
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import {BsStarFill,BsStarHalf,BsStar} from 'react-icons/bs'
-import Link from 'next/link';
+// import Link from 'next/link';
 import axios from 'axios';
 
-const [ProductInfo] = Products;
 
-const tags = ProductInfo.productTags.split(',')
-
-const rating = Math.floor(ProductInfo.avgRating)
 
 
 
 const Product = ({meza}) => {
+  const [currentDisplayBg, setCurrentDisplayBg] = useState(`url('${meza.imgs[0]}')`);
+  const [noOfItems,setNoOfItems] = useState(1);
+  const [price, setPrice] = useState(meza.prices[0]); 
+
   const router = useRouter();
 
     const handleTempBg = (e) => {
@@ -22,15 +19,28 @@ const Product = ({meza}) => {
         setCurrentDisplayBg(targetBg) 
     }
 
+    const handlePrice = (diff) => {
+        setPrice(price + diff);
+    }
+
     const handleChange = (e, option) => {
         const checked = e.target.checked;
+        const priceTag = option.price;
+        
+
+
+
         if(checked){
-            
+          handlePrice(priceTag);
+        }
+        else{
+          handlePrice(-priceTag);
         }
     }
 
-  const [currentDisplayBg, setCurrentDisplayBg] = useState(`url('${meza.imgs[0]}')`)
-  const [noOfItems,setNoOfItems] = useState(1)
+
+
+
 
   return(
     <div className="flex w-full items-center justify-center min-h-[85vh] h-fit">
@@ -71,7 +81,7 @@ const Product = ({meza}) => {
                   )
               })}
             </div>
-            <div className="flex h-fit mt-5 items-center">
+            <div className="flex h-fit mt-5 items-center" id='options'>
                 {meza.extraOptions.map((opt) => {
                   return(
                     <div className="flex items-center mx-2" key={opt._id}>
@@ -87,7 +97,7 @@ const Product = ({meza}) => {
                 })}
             </div>
             <div className="flex flex-col w-fit my-4 p-2">
-                <p className='font-bold text-[1.5rem]'>{`₦${meza.prices[0]}.00`}</p>
+                <p className='font-bold text-[1.5rem]'>{`₦${price}.00`}</p>
                 <div className="flex h-fit w-fit my-2">
                   <input type="text" value={noOfItems} className='border-2 w-[70px]' onChange={()=>{}}/>
                   <button className='mx-2 text-white bg-[rgb(153,43,17)] p-2 hover:bg-[rgb(119,35,13)] transition-all duration-300'>Add to cart</button>

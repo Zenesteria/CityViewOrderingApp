@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import {BsStarFill,BsStarHalf,BsStar} from 'react-icons/bs'
 import {GiWineBottle} from 'react-icons/gi'
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../../../redux/cartSlice'
 import axios from 'axios';
 
 const [ProductInfo] = Products;
@@ -22,6 +24,7 @@ const Product = ({drink}) => {
 
     const [size, setSize] = useState(0)
     const [price, setPrice] = useState(drink.prices[0]);
+    const dispatch = useDispatch()
 
 
 
@@ -31,7 +34,7 @@ const Product = ({drink}) => {
     });
   
     const [currentDisplayBg, setCurrentDisplayBg] = useState(`url('${drink.imgs[0]}')`)
-    const [noOfItems,setNoOfItems] = useState(1)
+    const [quantity,setQuantity] = useState(1)
 
   const router = useRouter();
 
@@ -43,6 +46,11 @@ const Product = ({drink}) => {
   const handleTempBg = (e) => {
     const targetBg = e.target.style.backgroundImage
     setCurrentDisplayBg(targetBg) 
+  }
+
+  const handleClick = () => {
+    // dispatch all values you wish to pass through to the cart
+    dispatch(addProduct({...drink, price, quantity}))
   }
 
   const handleActSize = (e, val) => {
@@ -123,8 +131,8 @@ const Product = ({drink}) => {
             <div className="flex flex-col w-fit my-4 p-2">
                 <p className='font-bold text-[1.5rem]'>{`₦${price}.00`}</p>
                 <div className="flex h-fit w-fit my-2">
-                  <input type="text" value={noOfItems} className='border-2 w-[70px]' onChange={()=>{}}/>
-                  <button className='mx-2 text-white bg-[rgb(153,43,17)] p-2 hover:bg-[rgb(119,35,13)] transition-all duration-300'>Add to cart</button>
+                  <input type="text" value={quantity} className='border-2 w-[70px]' onChange={()=>{}}/>
+                  <button className='mx-2 text-white bg-[rgb(153,43,17)] p-2 hover:bg-[rgb(119,35,13)] transition-all duration-300' onClick={handleClick}>Add to cart</button>
                 </div>
             </div>
           </div>
