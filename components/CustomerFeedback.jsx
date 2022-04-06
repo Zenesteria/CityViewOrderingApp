@@ -6,14 +6,14 @@ const FeebackMessages = CustomerFeedbackData.feedback
 
 export default function Feedback({feedbackdata}){
     return(
-        <div className="flex flex-col w-full h-fit min-h-[50vh] p-10">
-            <h1 className="text-[1.5rem] sm:text-[2rem] lg:text-[3rem] font-bold flex items-center">
+        <div className="flex flex-col w-full h-fit min-h-[50vh] p-10 item">
+            <h1 className="text-[1.5rem] sm:text-[2rem] lg:text-[3rem] font-bold flex">
                 {CustomerFeedbackData.title.split("/")[0]}
                 <FaHeart className="text-[#91200F] min-w-[30px] mx-2"/>
                 {CustomerFeedbackData.title.split("/")[1]}
             </h1>
             <hr className="border-black my-10" />
-            <div className="flex w-[90%] mx-auto flex-wrap  justify-center md:justify-between">
+            <div className="flex w-[90%] mx-auto flex-wrap  justify-center items-center md:justify-between">
                 {feedbackdata.map((data) => {
                     return(
                         <FeedbackMsg

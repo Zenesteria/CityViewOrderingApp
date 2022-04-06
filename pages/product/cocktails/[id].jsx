@@ -19,11 +19,11 @@ const rating = Math.floor(ProductInfo.avgRating)
 
 
 
-const Product = ({drink}) => {
+const Product = ({product}) => {
     //STATES
 
     const [size, setSize] = useState(0)
-    const [price, setPrice] = useState(drink.prices[0]);
+    const [price, setPrice] = useState(product.prices[0]);
     const dispatch = useDispatch()
 
 
@@ -33,7 +33,7 @@ const Product = ({drink}) => {
       small: true
     });
   
-    const [currentDisplayBg, setCurrentDisplayBg] = useState(`url('${drink.imgs[0]}')`)
+    const [currentDisplayBg, setCurrentDisplayBg] = useState(`url('${product.imgs[0]}')`)
     const [quantity,setQuantity] = useState(1)
 
   const router = useRouter();
@@ -50,14 +50,14 @@ const Product = ({drink}) => {
 
   const handleClick = () => {
     // dispatch all values you wish to pass through to the cart
-    dispatch(addProduct({...drink, price, quantity}))
+    dispatch(addProduct({...product, price, quantity}))
   }
 
   const handleActSize = (e, val) => {
       setActSize(() => {
         if(val === 0 ){
           console.log('small')
-          const diff = drink.prices[val] - drink.prices[size]
+          const diff = product.prices[val] - product.prices[size]
           setSize(val)
           handlePrice(diff)
           return {
@@ -67,7 +67,7 @@ const Product = ({drink}) => {
         }
         else if(val === 1){
           console.log('large')
-          const diff = drink.prices[val] - drink.prices[size]
+          const diff = product.prices[val] - product.prices[size]
           setSize(val)
           handlePrice(diff)
           return {
@@ -76,6 +76,10 @@ const Product = ({drink}) => {
           }
         }
       })
+  }
+
+  const handleAmountChange = (e) => {
+    setQuantity(e.target.value);
   }
 
 
@@ -95,13 +99,13 @@ const Product = ({drink}) => {
           <div className="flex flex-col h-[80vh] max-h-[1000px] min-w-[360px] p-4 flex-[0.7]">
             <div className="bg-center bg-cover min-w-[330px] bg-no-repeat w-full h-[80%] transition-all duration-500 ease-in-out" style={{backgroundImage: currentDisplayBg}}></div>
             <div className="flex w-full h-[15%] items-center justify-center">
-              <DisplayButton bg={`url('${drink.imgs[0]}')`} mouseOver={handleTempBg}/>
-              <DisplayButton bg={`url('${drink.imgs[1]}')`} mouseOver={handleTempBg}/>
+              <DisplayButton bg={`url('${product.imgs[0]}')`} mouseOver={handleTempBg}/>
+              <DisplayButton bg={`url('${product.imgs[1]}')`} mouseOver={handleTempBg}/>
             </div>
           </div>
           <div className="flex flex-col p-4 h-full min-w-[300px] flex-[1]">
-            <h1 className='text-[2rem] font-bold mb-2'>{drink.title}</h1>
-            <p className='text-[1.2rem] font-semibold italic mb-2'>Category: {drink.category}</p>
+            <h1 className='text-[2rem] font-bold mb-2'>{product.title}</h1>
+            <p className='text-[1.2rem] font-semibold italic mb-2'>Category: {product.category}</p>
             {/* <div className="flex items-center">
                 <div className="flex items-center mr-2">
                   <BsStarFill className='min-w-[15px] z-10'/>
@@ -113,12 +117,12 @@ const Product = ({drink}) => {
             <div className="flex w-full h-fit my-4 flex-col">
                 <h1>Description: </h1>
                 <p className='max-w-[450px]'>
-                  {drink.desc}
+                  {product.desc}
                 </p>
             </div>
             <div className="flex items-center w-[80%] flex-wrap">
               <h1 className='text-[1.2rem] text-gray-500'>Highlights: </h1>
-              {drink.tags.map((tag,i) => {
+              {product.tags.map((tag,i) => {
                   return(
                       <p className='m-2 border-[1px] rounded-md p-[2px] text-[0.7rem] min-w-[100px] flex items-center justify-center border-[rgb(153,43,17)] hover:bg-[rgb(153,43,17)] hover:text-white hover:scale-110 hover:font-bold transition-all duration-700' key={i}>{tag}</p>
                   )
@@ -131,7 +135,7 @@ const Product = ({drink}) => {
             <div className="flex flex-col w-fit my-4 p-2">
                 <p className='font-bold text-[1.5rem]'>{`₦${price}.00`}</p>
                 <div className="flex h-fit w-fit my-2">
-                  <input type="text" value={quantity} className='border-2 w-[70px]' onChange={()=>{}}/>
+                  <input type="text" value={quantity} className='border-2 w-[70px]' onChange={handleAmountChange}/>
                   <button className='mx-2 text-white bg-[rgb(153,43,17)] p-2 hover:bg-[rgb(119,35,13)] transition-all duration-300' onClick={handleClick}>Add to cart</button>
                 </div>
             </div>
@@ -161,7 +165,7 @@ export const getServerSideProps = async ({params}) => {
     const res = await axios.get(`http://localhost:3000/api/Products/cocktails/${params.id}`)
     return{
       props:{
-        drink: res.data
+        product: res.data
       }
     }
 }
