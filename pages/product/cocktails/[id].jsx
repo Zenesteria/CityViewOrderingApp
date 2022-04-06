@@ -48,7 +48,7 @@ const Product = ({product}) => {
     setCurrentDisplayBg(targetBg) 
   }
 
-  const handleClick = () => {
+  const handleAddToCart = () => {
     // dispatch all values you wish to pass through to the cart
     dispatch(addProduct({...product, price, quantity}))
   }
@@ -136,7 +136,7 @@ const Product = ({product}) => {
                 <p className='font-bold text-[1.5rem]'>{`₦${price}.00`}</p>
                 <div className="flex h-fit w-fit my-2">
                   <input type="text" value={quantity} className='border-2 w-[70px]' onChange={handleAmountChange}/>
-                  <button className='mx-2 text-white bg-[rgb(153,43,17)] p-2 hover:bg-[rgb(119,35,13)] transition-all duration-300' onClick={handleClick}>Add to cart</button>
+                  <button className='mx-2 text-white bg-[rgb(153,43,17)] p-2 hover:bg-[rgb(119,35,13)] transition-all duration-300' onClick={handleAddToCart}>Add to cart</button>
                 </div>
             </div>
           </div>
