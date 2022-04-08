@@ -165,6 +165,7 @@ const Cart = () => {
     const quantity = useSelector(state => state.cart.quantity);
     return(
         <Link href='/Cart'>
+            
             <a className=" h-fit w-fit my-auto relative">
                 <AiOutlineShoppingCart className='text-[2rem]'/>
                 <div className="flex items-center justify-center absolute top-[-20%] right-[-25%] p-1 h-[20px] text-[15px] w-[20px] rounded-full bg-[rgb(221,74,57)] text-white font-bold">
@@ -177,3 +178,4 @@ const Cart = () => {
 
 
 export default NavBar
+

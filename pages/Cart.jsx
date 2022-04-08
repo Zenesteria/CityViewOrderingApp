@@ -2,9 +2,9 @@ import React from 'react'
 import Image from 'next/image'
 import {FaTrash} from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
+import { removeProduct } from '../redux/cartSlice'
 
 export default function Cart() {
-    const dispatch = useDispatch();
     const cart = useSelector(state => state.cart);
   return (
     <div className='w-full min-h-[85vh] flex flex-col items-center pt-4 lg:pt-16'>
@@ -14,7 +14,7 @@ export default function Cart() {
             <div className="flex flex-col px-4 flex-1 sm:w-full h-fit mx-auto my-10 sm:p-10 max-h-[600px] max-w-[800px] overflow-y-auto">
                 {cart.products.length > 0 ?  cart.products.map((product) => {
                     return(
-                        <CartItem key={product._id} productData={product}/>
+                        <CartItem key={product.cartIndex} cartData={product.cartInfo} cartIndex={product.cartIndex}/>
                     )
                 })
                 : <EmptyCart />}
@@ -50,25 +50,32 @@ const EmptyCart = () => {
 }
 
 
-const CartItem = ({productData}) => {
+const CartItem = ({cartData, cartIndex}) => {
+    const dispatch = useDispatch();
+
+    const handleDelete = () => {
+        console.log('remove');
+        dispatch(removeProduct({...cartData, cartIndex}));
+    }
+
     return(
-        <div className="flex items-center w-full h-[25vh] sm:min-h-[130px] min-h-[100px] max-h-[130px] my-4 rounded-3xl bg-gradient-to-r from-white to-[rgba(255,237,233,0.44)] lg:shadow-[0_10px_40px_rgba(0,0,0,0.1)] min-w-[330px]">
+        <div className="flex items-center w-full h-[25vh] sm:min-h-[130px] min-h-[100px] max-h-[130px] my-4 rounded-3xl bg-gradient-to-r from-white to-[rgba(255,237,233,0.44)] lg:shadow-[0_10px_40px_rgba(0,0,0,0.1)] min-w-[330px] transition-all duration-700">
             <div className="flex flex-1 h-full items-center rounded-bl-3xl rounded-tl-3xl">
-                <div className="flex items-center justify-center relative h-full flex-[0.4] min-w-[70px] bg-cover bg-center bg-no-repeat rounded-bl-3xl rounded-tl-3xl  drop-shadow-2xl" style={{backgroundImage: `url('${productData.imgs[0]}')`}}>
+                <div className="flex items-center justify-center relative h-full flex-[0.4] min-w-[70px] bg-cover bg-center bg-no-repeat rounded-bl-3xl rounded-tl-3xl  drop-shadow-2xl" style={{backgroundImage: `url('${cartData.imgs[0]}')`}}>
                     {/* <Image src={productData.imgs[0]} layout='fill' objectFit='contain' alt=''/> */}
                 </div>
                 <div className="flex max-w-[300px] flex-col h-full flex-[1] items-center justify-center p-2 text-center min-w-[80px]">
-                    <h1 className='text-[0.7rem] sm:text-[1.2rem] lg:text-[1.5rem] font-bold'>{productData.title}</h1>
-                    <p className='text-gray-600 text-[0.6rem] lg:text-[0.9rem]'>{productData.desc}</p>
+                    <h1 className='text-[0.7rem] sm:text-[1.2rem] lg:text-[1.5rem] font-bold'>{cartData.title}</h1>
+                    <p className='text-gray-600 text-[0.6rem] lg:text-[0.9rem]'>{cartData.desc}</p>
                 </div>
                 <div className="flex h-fit mx-2 xl:mx-auto flex-[0.3] justify-around items-center rounded-md sm:rounded-2xl">
-                    <h1 className='text-[0.5rem] sm:text-[0.8rem] lg:text-[1rem] font-semibold'>qty : {productData.quantity}</h1>
+                    <h1 className='text-[0.5rem] sm:text-[0.8rem] lg:text-[1rem] font-semibold'>qty : {cartData.quantity}</h1>
                 </div>
                 <div className='font-bold flex-[0.5] flex items-center text-center justify-center text-[0.8rem] lg:text-[1.2rem] mx-2 sm:mx-auto p-2'>
-                    <h1>Total: ₦{productData.price * productData.quantity}</h1>
+                    <h1>Total: ₦{cartData.price * cartData.quantity}</h1>
                 </div>
             </div>
-            <div className="sm:ml-2 lg:mx-0 min-w-[30px] flex items-center justify-center flex-[0.1] h-full bg-white rounded-br-3xl rounded-tr-3xl hover:bg-[rgba(0,0,0,0.01)] transition-all duration-300 group cursor-pointer">
+            <div className="sm:ml-2 lg:mx-0 min-w-[30px] flex items-center justify-center flex-[0.1] h-full bg-white rounded-br-3xl rounded-tr-3xl hover:bg-[rgba(0,0,0,0.01)] transition-all duration-300 group cursor-pointer" onClick={handleDelete}>
                 <FaTrash className='text-[1.2rem] sm:text-[1.5rem] text-[rgb(153,43,17)] group-hover:text-red-500 transition-all duration-300'/>
             </div>
         </div>

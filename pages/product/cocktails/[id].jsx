@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import {BsStarFill,BsStarHalf,BsStar} from 'react-icons/bs'
 import {GiWineBottle} from 'react-icons/gi'
 import Link from 'next/link';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../../../redux/cartSlice'
 import axios from 'axios';
 
@@ -25,6 +25,7 @@ const Product = ({product}) => {
     const [size, setSize] = useState(0)
     const [price, setPrice] = useState(product.prices[0]);
     const dispatch = useDispatch()
+    const cart = useSelector(state => state.cart);
 
 
 
@@ -33,8 +34,8 @@ const Product = ({product}) => {
       small: true
     });
   
-    const [currentDisplayBg, setCurrentDisplayBg] = useState(`url('${product.imgs[0]}')`)
-    const [quantity,setQuantity] = useState(1)
+    const [currentDisplayBg, setCurrentDisplayBg] = useState(`url('${product.imgs[0]}')`);
+    const [quantity,setQuantity] = useState(1);
 
   const router = useRouter();
 
@@ -50,7 +51,7 @@ const Product = ({product}) => {
 
   const handleAddToCart = () => {
     // dispatch all values you wish to pass through to the cart
-    dispatch(addProduct({...product, price, quantity}))
+    dispatch(addProduct({...product, price, quantity, size}));
   }
 
   const handleActSize = (e, val) => {
