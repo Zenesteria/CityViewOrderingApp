@@ -21,21 +21,31 @@ const cartSlice = createSlice({
                     if(product.cartInfo._id === action.payload._id){
                         console.log('same');
                         product.cartInfo.quantity += action.payload.quantity;
-                    }
-                    else if(product.cartInfo._id != action.payload._id){
-                        console.log(console.log('different'));
-                        state.products.push({cartInfo:action.payload, cartIndex: state.cartIndex});
-                        state.cartIndex += 1;
-                        state.quantity += 1;
+                        product.cartInfo.subTotal += action.payload.subTotal;
                     }
                 });
+
+                //Check If Item is present.
+                const itemPresent = state.products.some((product) => {
+                    if(product.cartInfo._id === action.payload._id){
+                        return true
+                    }
+                });
+                if(!itemPresent){
+                    state.products.push({cartInfo:action.payload, cartIndex: state.cartIndex});
+                    state.cartIndex += 1;
+                    state.quantity += 1;
+                    console.log('new diff cart item');
+                }
+
+
             }
             
-            state.total += action.payload.price * action.payload.quantity;
+            state.total += action.payload.subTotal;
         },
         removeProduct: (state, action) => {
             state.quantity -= 1;
-            state.total -= action.payload.price * action.payload.quantity;
+            state.total -= action.payload.subTotal;
             state.products.splice(action.payload.cartIndex, 1);
             state.cartIndex = state.products.length - 1;
             state.products.forEach((product, index) => {

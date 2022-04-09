@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import {FaTrash} from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
@@ -51,6 +51,7 @@ const EmptyCart = () => {
 
 
 const CartItem = ({cartData, cartIndex}) => {
+    
     const dispatch = useDispatch();
 
     const handleDelete = () => {
@@ -72,7 +73,7 @@ const CartItem = ({cartData, cartIndex}) => {
                     <h1 className='text-[0.5rem] sm:text-[0.8rem] lg:text-[1rem] font-semibold'>qty : {cartData.quantity}</h1>
                 </div>
                 <div className='font-bold flex-[0.5] flex items-center text-center justify-center text-[0.8rem] lg:text-[1.2rem] mx-2 sm:mx-auto p-2'>
-                    <h1>Total: ₦{cartData.price * cartData.quantity}</h1>
+                    <h1>Total: ₦{cartData.subTotal}</h1>
                 </div>
             </div>
             <div className="sm:ml-2 lg:mx-0 min-w-[30px] flex items-center justify-center flex-[0.1] h-full bg-white rounded-br-3xl rounded-tr-3xl hover:bg-[rgba(0,0,0,0.01)] transition-all duration-300 group cursor-pointer" onClick={handleDelete}>
