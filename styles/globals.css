@@ -34,6 +34,21 @@ a {
   animation:pending 1.5s ease-in-out infinite alternate;
 }
 
+.del-item{
+  animation:slideLeft 0.3s ease;
+}
+
+@keyframes slideLeft{
+  from{
+    transform:translateX(0);
+    opacity:1;
+  }
+  to{
+    transform:translateX(-500px);
+    opacity:0;
+  }
+}
+
 .activeProgress{
   color:rgb(100,100,100);
 }

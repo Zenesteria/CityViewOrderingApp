@@ -57,7 +57,7 @@ const NavLink = (props) => {
     const router = useRouter()
     return(
         <Link href={props.Href} passHref>
-            <a className={(router.pathname === props.Href ?'active ': '') + 'flex justify-center items-center text-center h-fit my-auto tracking-[0.1rem] hover:tracking-[0.2rem] transition-all duration-300'}>
+            <a className={(router.pathname === props.Href ?'active ': '') + 'mx-10 flex justify-center items-center text-center h-fit my-auto tracking-[0.1rem] hover:tracking-[0.2rem] transition-all duration-300'}>
                 {props.name}
             </a>
         </Link>
@@ -92,11 +92,6 @@ const MobileMenu = (props) => {
                     linkName='Products'
                 />
                 <MobileNavLink
-                    linkPath='/Menu'
-                    iconName={FaBook}
-                    linkName='Menu'
-                />
-                <MobileNavLink
                     linkPath='/Events'
                     iconName={BsFillCalendarEventFill}
                     linkName='Events'
@@ -120,7 +115,7 @@ const SubNav = () => {
     const router = useRouter()
     return(
         <div className="lg:flex mx-auto hidden w-[90%]">
-            <div className="flex w-[70%] justify-around xl:text-[1.2rem] font-light mx-auto">
+            <div className="flex w-fit justify-around xl:text-[1.2rem] font-light mx-auto">
                 <NavLink
                     name='Home'
                     Href='/'
@@ -128,21 +123,17 @@ const SubNav = () => {
                 <NavLink
                     name='Products'
                     Href='/Products'
-                />
-                <NavLink
-                    name='Menu'
-                    Href='/Menu'
                 /> 
             </div>
 
             <Link href='/' passHref>
-                <a className="flex flex-col h-fit items-center px-2 w-full min-w-[200px] justify-center ">
+                <a className="flex flex-col h-fit items-center px-2 w-fit min-w-[100px] justify-center ">
                     <Image src='/images/cityviewsmall.png' width='40' height='44' alt=' '/>
-                    <h1 className='ml-2 xl:text-[1.5rem] font-raleway font-bold tracking-widest'>City View</h1>
+                    <h1 className='ml-2 text-[0.8rem] xl:text-[1.2rem] font-raleway font-bold tracking-widest'>City View</h1>
                 </a>
             </Link>
 
-            <div className="flex w-[50%] justify-around xl:text-[1.2rem] font-light mx-auto">
+            <div className="flex w-fit justify-around xl:text-[1.2rem] font-light mx-auto">
                 <NavLink
                     name='Events'
                     Href='/Events'
@@ -154,7 +145,7 @@ const SubNav = () => {
             </div>
 
 
-            <div className="flex w-[25%] justify-center">
+            <div className="flex w-fit justify-center">
                 <Cart/>
             </div>
         </div>

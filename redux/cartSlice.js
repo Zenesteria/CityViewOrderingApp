@@ -11,6 +11,8 @@ const cartSlice = createSlice({
     reducers:{
         addProduct:(state, action) => {
             if(state.products.length === 0){
+                state.cartIndex = 0
+                state.quantity = 0
                 state.products.push({cartInfo:action.payload, cartIndex: state.cartIndex});
                 state.cartIndex += 1;
                 state.quantity += 1;
@@ -20,7 +22,9 @@ const cartSlice = createSlice({
                 state.products.forEach((product) => {
                     if(product.cartInfo._id === action.payload._id){
                         console.log('same');
-                        product.cartInfo.quantity += action.payload.quantity;
+                        product.cartInfo.Large += action.payload.Large;
+                        product.cartInfo.Regular += action.payload.Regular;
+                        product.cartInfo.qty += action.payload.qty;
                         product.cartInfo.subTotal += action.payload.subTotal;
                     }
                 });
@@ -46,8 +50,8 @@ const cartSlice = createSlice({
         removeProduct: (state, action) => {
             state.quantity -= 1;
             state.total -= action.payload.subTotal;
-            state.products.splice(action.payload.cartIndex, 1);
             state.cartIndex = state.products.length - 1;
+            state.products.splice(action.payload.cartIndex, 1);
             state.products.forEach((product, index) => {
                 product.cartIndex = index;
             });

@@ -1,6 +1,6 @@
-import { useState} from 'react';
+import { useEffect, useState} from 'react';
 import { useRouter } from 'next/router';
-import {GiWineBottle} from 'react-icons/gi'
+import {MdFastfood} from 'react-icons/md'
 // import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import {addProduct} from '../redux/cartSlice';
@@ -15,6 +15,10 @@ import {addProduct} from '../redux/cartSlice';
 
 
 const Product = ({product}) => {
+    useEffect(() => {
+      console.log(quantity);
+    })
+
     //STATES
 
     const [size, setSize] = useState(0)
@@ -27,11 +31,15 @@ const Product = ({product}) => {
 
     const [actSize, setActSize] = useState({
       large: false,
-      small: true
+      regular: true
     });
   
     const [currentDisplayBg, setCurrentDisplayBg] = useState(`url('${product.imgs[0]}')`);
-    const [quantity,setQuantity] = useState(0);
+    const [quantity,setQuantity] = useState({
+      Large: 0,
+      Regular: 0,
+      qty: 0
+    });
 
   const router = useRouter();
 
@@ -47,25 +55,25 @@ const Product = ({product}) => {
 
   const handleAddToCart = () => {
     // dispatch all values you wish to pass through to the cart
-    const subTotal = quantity * price;
-    if(quantity <= 0 ){
+    const subTotal = quantity.qty * price;
+    if(quantity.Total <= 0 ){
       alert('please select an amount')
     }
     else{
-      dispatch(addProduct({...product, price, quantity, size, subTotal}));
+      dispatch(addProduct({...product, price, ...quantity, size, subTotal}));
     }
   }
 
   const handleActSize = (e, val) => {
       setActSize(() => {
         if(val === 0 ){
-          console.log('small')
+          console.log('regular')
           const diff = product.prices[val] - product.prices[size]
           setSize(val)
           handlePrice(diff)
           return {
             large: false,
-            small: true
+            regular: true
           }
         }
         else if(val === 1){
@@ -75,14 +83,40 @@ const Product = ({product}) => {
           handlePrice(diff)
           return {
             large: true,
-            small: false
+            regular: false
           }
         }
       })
   }
 
   const handleAmountChange = (e) => {
-    setQuantity(parseInt(e.target.value === '' ? 0 : e.target.value));
+    setQuantity((prev) => {
+      let large;
+      let reg;
+      let totalval;
+      if(actSize.regular){
+        reg = parseInt(e.target.value === '' ? 0 : e.target.value);
+        large = parseInt(prev.Large);
+        totalval = reg + large;
+        return{
+          Large: large,
+          Regular: reg,
+          qty: totalval
+        }
+      }
+      else if(actSize.large){
+        large = parseInt(e.target.value === '' ? 0 : e.target.value);
+        reg = parseInt(prev.Regular);
+        totalval = reg + large;
+        return{
+          Large: large,
+          Regular: reg,
+          qty: totalval
+        }
+      }
+    });
+    
+    
   }
 
 
@@ -127,19 +161,19 @@ const Product = ({product}) => {
               <h1 className='text-[1.2rem] text-gray-500'>Highlights: </h1>
               {product.tags.map((tag,i) => {
                   return(
-                      <p className='m-2 border-[1px] rounded-md p-[2px] text-[0.7rem] min-w-[100px] flex items-center justify-center border-[rgb(153,43,17)] hover:bg-[rgb(153,43,17)] hover:text-white hover:scale-110 hover:font-bold transition-all duration-700' key={i}>{tag}</p>
+                      <p className='font-bold mr-2' key={i}>{tag}{product.tags.length === i+1 ? '' : ','}</p>
                   )
               })}
             </div>
             <div className="flex mt-7 items-end">
                 {product.prices.map((price, index) => {
-                  return <SizeBtn txt={index === 0 ? 'small' : index === 1 ? 'large' : ''} key={index} val={index} callBack={handleActSize} act={index === 0 ? actSize.small && true : index === 1 ? actSize.large && true : null}/>
+                  return <SizeBtn txt={index === 0 ? 'regular' : index === 1 ? 'large' : ''} key={index} val={index} callBack={handleActSize} act={index === 0 ? actSize.regular && true : index === 1 ? actSize.large && true : null}/>
                 })}
             </div>
             <div className="flex flex-col w-fit my-4 p-2">
                 <p className='font-bold text-[1.5rem]'>{`₦${price}.00`}</p>
                 <div className="flex h-fit w-fit my-2">
-                  <input type="text" value={quantity} className='border-2 w-[70px]' onChange={handleAmountChange}/>
+                  <input type="text" value={actSize.large ? quantity.Large : actSize.regular ? quantity.Regular : null} className='border-2 w-[70px]' onChange={handleAmountChange}/>
                   <button className='mx-2 text-white bg-[rgb(153,43,17)] p-2 hover:bg-[rgb(119,35,13)] transition-all duration-300' onClick={handleAddToCart}>Add to cart</button>
                 </div>
             </div>
@@ -159,7 +193,7 @@ const DisplayButton = (props) => {
 const SizeBtn = ({txt, val, callBack, act}) => {
   return(
       <div className="flex flex-col mx-4 items-center justify-end hover:text-[rgb(188,98,62)] group" style={act ? {color: 'rgb(188,98,62)' , fontWeight: 'bold'} : {}} onClick={(e) => callBack(e, val)}>
-          <GiWineBottle className={`text-[${txt === 'large' ? '3rem' : txt === 'small' ?  '1.5rem' : '' }] group-hover:scale-110  transition-all duration-300`}/>
+          <MdFastfood className={`text-[${txt === 'large' ? '3rem' : txt === 'regular' ?  '1.5rem' : '' }] group-hover:scale-110  transition-all duration-300`}/>
           <h1 className='group-hover:font-bold transition-all duration-300'>{txt}</h1>
       </div>
   )
