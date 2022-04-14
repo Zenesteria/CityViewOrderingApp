@@ -1,36 +1,29 @@
+
+//Modules
 import Slider from "react-slick";
-import Product from "./Product";
-import ProductDisplay from './ProductDisplay'
-// import Products from "../data/Products";
+
+//Sub-Components
+import Product from "./Slide";
 import {AiOutlineLeft, AiOutlineRight} from 'react-icons/ai'
-import {BsFillLightningFill} from 'react-icons/bs'
-import {slidercontentdata} from "../data/MainSiteData";
+import {slidercontentdata} from "../../data/MainSiteData";
 
 function SampleNextArrow(props) {
-    const { onClick } = props;
-    return (
-      <div className="flex w-fit h-fit p-2 bg-white border-[1px] absolute right-[-5%] top-[50%] cursor-pointer rounded-full z-50 hover:bg-[rgb(179,57,19)] transition-all duration-300 group" onClick={onClick}>
-        <AiOutlineRight className="text-[1.5rem] text-gray-600 hover:text-white transition-all duration-300"/>
+  const { onClick } = props;
+  return (
+    <div className="flex w-fit h-fit p-2 bg-white border-[1px] absolute right-[-5%] top-[50%] cursor-pointer rounded-full z-50 hover:bg-[rgb(179,57,19)] transition-all duration-300 group" onClick={onClick}>
+      <AiOutlineRight className="text-[1.5rem] text-gray-600 hover:text-white transition-all duration-300"/>
+    </div>
+  );
+}
+function SamplePrevArrow(props) {
+  const {onClick} = props;
+  return (
+      <div className="flex w-fit h-fit p-2 bg-white border-[1px] absolute left-[-5%] top-[50%] cursor-pointer rounded-full z-50 hover:bg-[rgb(179,57,19)] transition-all duration-300 group" onClick={onClick}>
+          <AiOutlineLeft className="text-[1.5rem] text-gray-600 hover:text-white transition-all duration-300"/>
       </div>
-    );
-}
-  
-  function SamplePrevArrow(props) {
-    const {onClick} = props;
-    return (
-        <div className="flex w-fit h-fit p-2 bg-white border-[1px] absolute left-[-5%] top-[50%] cursor-pointer rounded-full z-50 hover:bg-[rgb(179,57,19)] transition-all duration-300 group" onClick={onClick}>
-            <AiOutlineLeft className="text-[1.5rem] text-gray-600 hover:text-white transition-all duration-300"/>
-        </div>
-    );
+  );
 }
 
-// const featuredProducts = Products.filter((data) => {
-//   return data.Featured
-// })
-
-// const dislayProducts = Products.filter((data) => {
-//   return data.id < 11 && !data.Featured
-// })
 
 export default function ItemSlider({featured}) {
     const settings = {
@@ -76,17 +69,19 @@ export default function ItemSlider({featured}) {
                     return(
                         <div key={data._id}>
                             <Product
+                                id = {data._id}
                                 image={`url('${data.img}')`}
                                 status={data.desc}
                                 title={data.title}
                                 tags={data.desc}
-                                price={data.prices}
+                                price={data.price}
                             />
                         </div>
                     )
                 })}
             </Slider>
-          </div>    
+          </div>
+
       </div>
   );
 }

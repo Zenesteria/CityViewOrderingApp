@@ -1,9 +1,12 @@
-import { useEffect, useState} from 'react';
+import {useState} from 'react';
 import { useRouter } from 'next/router';
 import {MdFastfood} from 'react-icons/md'
-// import Link from 'next/link';
+import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import {addProduct} from '../redux/cartSlice';
+import { addMessage, resetMessages } from '../redux/msgSlice';
+
+import Messages from './Messages';
 
 
 
@@ -15,17 +18,17 @@ import {addProduct} from '../redux/cartSlice';
 
 
 const Product = ({product}) => {
-    useEffect(() => {
-      console.log(quantity);
-    })
+    //REDUX STATES
+
+
+
 
     //STATES
-
     const [size, setSize] = useState(0)
     const [price, setPrice] = useState(product.prices[0]);
-    // const [subTotal, setSubTotal] = useState(0);
     const dispatch = useDispatch()
-    const cart = useSelector(state => state.cart);
+
+    
 
 
 
@@ -54,13 +57,29 @@ const Product = ({product}) => {
   }
 
   const handleAddToCart = () => {
+    let msg;
     // dispatch all values you wish to pass through to the cart
     const subTotal = quantity.qty * price;
-    if(quantity.Total <= 0 ){
-      alert('please select an amount')
+    if(quantity.qty <= 0 ){
+      msg = {
+        msg: 'Please Select an Amount. . .',
+        type: 'error'
+      }
+      dispatch(addMessage({...msg}))
+      // setTimeout(() => {
+      //   dispatch(resetMessages())
+      // }, 4000);
     }
     else{
+      msg = {
+        msg: 'Added to Cart Successfully!',
+        type: 'success'
+      }
       dispatch(addProduct({...product, price, ...quantity, size, subTotal}));
+      dispatch(addMessage({...msg}))
+      setTimeout(() => {
+        dispatch(resetMessages());
+      }, 1000);
     }
   }
 
@@ -129,8 +148,12 @@ const Product = ({product}) => {
   return(
     <div className="flex w-full items-center justify-center min-h-[85vh] h-fit">
       <div className="flex flex-col w-[80%] min-h-[70vh] h-fit bg-white pt-10">
-        <div className="flex p-2 w-full h-fit">
-          <h1>{router.pathname}</h1>
+        <div className="flex p-2 w-full h-fit items-center">
+          <Link href={`/${router.pathname.split('/')[1]}/${router.pathname.split('/')[2]}`} passHref>
+            <h1 className='underline cursor-pointer text-gray-500 hover:text-black mr-2 transition-all duration-300'>{router.pathname.split('/')[1]}/</h1>
+          </Link>
+          <h1 className='font-bold'>{product.title}</h1>
+          <Messages/>
         </div>
         <div className="flex w-full min-h-[80vh] justify-center h-fit ml-auto flex-wrap">
           <div className="flex flex-col h-[80vh] max-h-[1000px] min-w-[360px] p-4 flex-[0.7]">
@@ -198,6 +221,9 @@ const SizeBtn = ({txt, val, callBack, act}) => {
       </div>
   )
 }
+
+
+
 
 
 

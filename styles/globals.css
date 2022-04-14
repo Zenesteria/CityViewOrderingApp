@@ -37,6 +37,9 @@ a {
 .del-item{
   animation:slideLeft 0.3s ease;
 }
+.fadeOut{
+  animation:fadeOut 2s ease-in-out;
+}
 
 @keyframes slideLeft{
   from{
@@ -46,6 +49,15 @@ a {
   to{
     transform:translateX(-500px);
     opacity:0;
+  }
+}
+
+@keyframes fadeOut{
+  from{
+    opacity:1;
+  }
+  to{
+    opacity: 0;
   }
 }
 

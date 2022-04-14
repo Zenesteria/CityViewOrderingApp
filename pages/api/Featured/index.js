@@ -1,5 +1,5 @@
-import dbConnect from '../../util/mongo'
-import featureds from '../../models/Featured'
+import dbConnect from '../../../util/mongo'
+import featureds from '../../../models/Featured'
 
 
 

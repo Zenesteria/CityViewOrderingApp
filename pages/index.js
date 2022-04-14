@@ -1,14 +1,17 @@
+//Module Data
 import axios from 'axios'
 import Head from 'next/head'
-// import Featured from '../components/Featured'
 import { CarouselData } from "../data/MainSiteData";
-import Carousel from '../components/Carousel'
-import Meals from '../components/Meals'
+
+
+//Components
+import Carousel from '../components/Carousel/Carousel'
+import Meals from '../components/ItemsCarousel/Carousel'
 import MealMenu from '../components/MealMenu'
 import SubShowcase from '../components/SubShowcase'
-import Banner from '../components/Banner'
-import CustomerFeedback from '../components/CustomerFeedback'
-import BannerSecondary from '../components/BannerSecondary'
+import Banner from '../components/Banner/Banner'
+import CustomerFeedback from '../components/CustomerFeedback/CustomerFeedback'
+import BannerSecondary from '../components/Banner/BannerSecondary'
 
 
 export default function Home({featured, feedbacks}) {
@@ -31,6 +34,8 @@ export default function Home({featured, feedbacks}) {
   )
 }
 
+
+//Server-Side Props
 export const getServerSideProps = async () => {
   const res = await axios.get('http://localhost:3000/api/Featured');
   const feedback = await axios.get('http://localhost:3000/api/Feedback')

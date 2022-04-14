@@ -1,7 +1,11 @@
 import Slider from "react-slick";
 import Link from "next/link";
 
+//Sub - Components
+import { Slide } from "./Slide";
+
 export default function ItemSlider({CarouselData}) {
+    // SLIDER SETTINGS
     const settings = {
         arrows:false,
         dots: false,
@@ -13,8 +17,11 @@ export default function ItemSlider({CarouselData}) {
         slidesToShow: 1,
         slidesToScroll: 1
       };
+      
   return (
     <div className=" w-full h-fit mx-auto relative">
+
+        {/* TEXT OVERLAY */}
         <div className="flex h-full w-full z-40 absolute p-4">
             <div className="flex flex-col h-full justify-center w-[87%] ml-auto text-white min-w-[330px]">
                 <h1 className="text-[2rem] sm:text-[3rem] font-bold">{CarouselData.title.split('/')[0]} <br /> {CarouselData.title.split('/')[1]}</h1>
@@ -26,6 +33,8 @@ export default function ItemSlider({CarouselData}) {
                 </Link> 
             </div>
         </div>
+
+        {/* IMAGE SLIDER */}
         <Slider {...settings}>
             {CarouselData.images.map((img) => {
                 return(
@@ -33,15 +42,9 @@ export default function ItemSlider({CarouselData}) {
                 )
             })}
         </Slider>
+
     </div>
   );
 }
 
 
-const Slide = (props) => {
-    return(
-        <div key={props.key}>
-            <div className="flex w-full h-[60vh] bg-blue-50 bg-center bg-cover bg-no-repeat darken" style={{backgroundImage:props.bg}}></div>
-        </div>
-    )
-}

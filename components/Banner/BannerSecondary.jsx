@@ -1,4 +1,4 @@
-import { Banners,SiteData } from "../data/MainSiteData"
+import { Banners,SiteData } from "../../data/MainSiteData"
 import Link from "next/link"
 
 const BannerData = Banners.banners[1]
